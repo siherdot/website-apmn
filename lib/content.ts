@@ -284,9 +284,6 @@ export const pages: Halaman[] = [
 ];
 
 export const canonicLinks = [
+  { nama: "RSU Putri Bidadari", url: "https://rsu.putribidadari.co.id/" },
   { nama: "RSU Putri Bidadari Aceh", url: "https://rsuputribidadariaceh.com" },
-  { nama: "RSU Bidadari Binjai", url: "https://rsu.bidadari.co.id" },
-  { nama: "RSU Bidadari Batubara", url: "https://rsu.bidadaribatubara.com" },
-  { nama: "RSU Mahkota Bidadari", url: "https://rsu.mahkotabidadari.com" },
-  { nama: "RSU Putri Bidadari", url: "https://rsu.putribidadari.co.id" },
 ];

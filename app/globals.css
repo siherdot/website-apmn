@@ -105,6 +105,7 @@ nav.main .drop a:hover{background:var(--sand);color:var(--forest)}
 .network p{margin:0;color:#bdcdc5;font-size:14px;max-width:52ch}
 .network a.cta{border:1px solid #88a89a;color:#fff;padding:12px 18px;font-size:13px;font-weight:700}
 .network a.cta:hover{background:#fff;color:var(--forest-deep)}
+.network-links{display:flex;gap:10px;flex-wrap:wrap}
 
 /* inner pages */
 .crumb{font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-soft);font-weight:700;margin:34px 0 26px}

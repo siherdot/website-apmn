@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { site } from "@/lib/content";
+import { canonicLinks, site } from "@/lib/content";
 
 const docs = [
   { meta: "Investor", title: "Prospektus", href: "/prospektus" },
@@ -126,12 +126,16 @@ export default function Home() {
             <h2>Jaringan Rumah Sakit Grup</h2>
             <p>
               Informasi layanan, fasilitas, dan jadwal dokter tersedia melalui situs resmi
-              RSU Putri Bidadari.
+              masing-masing rumah sakit.
             </p>
           </div>
-          <a className="cta" href={site.rsUrl} target="_blank" rel="noreferrer">
-            Kunjungi situs RSU →
-          </a>
+          <div className="network-links">
+            {canonicLinks.map((r) => (
+              <a className="cta" href={r.url} key={r.url} target="_blank" rel="noreferrer">
+                {r.nama} →
+              </a>
+            ))}
+          </div>
         </div>
       </section>
     </>
