@@ -1,6 +1,7 @@
 export const site = {
   name: "PT Ade Putri Medical Nusantara",
   short: "APMN",
+  url: "https://adeputrimedicalnusantara.co.id",
   tagline: "Berkomitmen menghadirkan layanan kesehatan yang mudah, cepat, dan setara.",
   phone: "0812-9690-8881",
   email: "ptapmn@adeputrimedicalnusantara.co.id",
