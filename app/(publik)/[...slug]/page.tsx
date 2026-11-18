@@ -2,8 +2,11 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { navGroups, pages } from "@/lib/content";
+import { listPublishedReports } from "@/lib/reports";
 
 type Props = { params: Promise<{ slug: string[] }> };
+
+export const dynamic = "force-dynamic";
 
 export function generateStaticParams() {
   return pages.map((p) => ({ slug: [p.slug] }));
@@ -22,6 +25,8 @@ export default async function Halaman({ params }: Props) {
   const { slug } = await params;
   const page = pages.find((p) => p.slug === slug.join("/"));
   if (!page) notFound();
+  const reports = await listPublishedReports();
+  const report = reports.find((r) => r.slug === page.slug);
 
   return (
     <div className="wrap">
@@ -49,6 +54,18 @@ export default async function Halaman({ params }: Props) {
         <article className="article">
           <h1>{page.judul}</h1>
           <p className="ringkas">{page.ringkas}</p>
+          {report && report.url !== `/${page.slug}` && (
+            <div className="doc-callout managed">
+              {report.url.startsWith("/") ? (
+                <Link href={report.url}>Dokumen resmi: {report.title} →</Link>
+              ) : (
+                <a href={report.url} target="_blank" rel="noreferrer">Dokumen resmi: {report.title} →</a>
+              )}
+              <small>
+                {report.description || "Dokumen dikelola melalui dashboard admin."} Tautan diperbarui oleh admin perseroan.
+              </small>
+            </div>
+          )}
           {page.bagian.map((b) => (
             <section key={b.h}>
               <h2>{b.h}</h2>
@@ -58,7 +75,7 @@ export default async function Halaman({ params }: Props) {
                   {b.li.map((t, i) => <li key={i}>{t}</li>)}
                 </ul>
               )}
-              {b.taut?.map((t) =>
+              {b.taut?.filter((t) => !(report && !t.url.startsWith("/"))).map((t) =>
                 t.url.startsWith("/") ? (
                   <p key={t.url}>
                     <Link href={t.url}>{t.teks} →</Link>

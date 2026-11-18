@@ -1,15 +1,31 @@
 import Link from "next/link";
 import { canonicLinks, site } from "@/lib/content";
+import { listPublishedReports } from "@/lib/reports";
+import type { Report } from "@/lib/report-types";
 
-const docs = [
-  { meta: "Investor", title: "Prospektus", href: "/prospektus" },
-  { meta: "Tahunan", title: "Laporan Tahunan", href: "/laporan-tahunan" },
-  { meta: "Tata kelola", title: "Piagam Komite Audit", href: "/piagam-komite-audit" },
-  { meta: "Kinerja", title: "Kebijakan Dividen", href: "/dividen" },
-  { meta: "Publik", title: "Keterbukaan Informasi", href: "/keterbukaan-informasi" },
-];
+export const dynamic = "force-dynamic";
 
-export default function Home() {
+function DocRow({ report }: { report: Report }) {
+  const inner = (
+    <>
+      <span className="meta">{report.category}</span>
+      <span className="title">{report.title}</span>
+      <span className="go">→</span>
+    </>
+  );
+  return report.url.startsWith("/")
+    ? <Link className="docrow" href={report.url} key={report.id}>{inner}</Link>
+    : <a className="docrow" href={report.url} key={report.id} target="_blank" rel="noreferrer">{inner}</a>;
+}
+
+function MiniDoc({ report }: { report: Report }) {
+  return report.url.startsWith("/")
+    ? <li><Link href={report.url}><span>{report.title}</span> →</Link></li>
+    : <li><a href={report.url} target="_blank" rel="noreferrer"><span>{report.title}</span> →</a></li>;
+}
+
+export default async function Home() {
+  const reports = await listPublishedReports();
   return (
     <>
       <section className="masthead">
@@ -42,9 +58,7 @@ export default function Home() {
             <div className="doc-panel">
               <h3>Dokumen utama</h3>
               <ul>
-                <li><Link href="/prospektus"><span>Prospektus</span> →</Link></li>
-                <li><Link href="/laporan-tahunan"><span>Laporan Tahunan</span> →</Link></li>
-                <li><Link href="/piagam-komite-audit"><span>Piagam Komite Audit</span> →</Link></li>
+                {reports.slice(0, 3).map((report) => <MiniDoc report={report} key={report.id} />)}
               </ul>
             </div>
           </aside>
@@ -105,13 +119,10 @@ export default function Home() {
             </p>
           </div>
           <div className="doclist">
-            {docs.map((d) => (
-              <Link className="docrow" href={d.href} key={d.href}>
-                <span className="meta">{d.meta}</span>
-                <span className="title">{d.title}</span>
-                <span className="go">→</span>
-              </Link>
-            ))}
+            {reports.map((report) => <DocRow report={report} key={report.id} />)}
+            {reports.length === 0 && (
+              <p className="ir-empty">Dokumen investor akan ditampilkan setelah tersedia.</p>
+            )}
           </div>
           <p className="ir-contact">
             Pertanyaan investor:{" "}

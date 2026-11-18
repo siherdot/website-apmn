@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useMemo, useRef, useState } from "react";
 import type { Photo } from "@/lib/gallery-types";
 import { GALLERY_CATEGORIES } from "@/lib/gallery-types";
+import AdminTabs from "./admin-tabs";
 
 type Draft = { title: string; category: string; caption: string; published: boolean; order: number };
 
@@ -132,6 +133,7 @@ export default function PhotoManager({ initialPhotos }: { initialPhotos: Photo[]
           <p className="adm-sub">Unggah foto baru, atur judul dan kategori, lalu tentukan mana yang tampil di galeri publik.</p>
         </div>
         <div className="adm-actions">
+          <AdminTabs active="foto" />
           <Link className="adm-link" href="/galeri" target="_blank">Lihat galeri ↗</Link>
           <Link className="adm-link" href="/">Situs utama ↗</Link>
           <button className="adm-quiet" type="button" onClick={logout}>Keluar</button>

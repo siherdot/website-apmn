@@ -10,6 +10,7 @@ const types: Record<string, string> = {
   ".png": "image/png",
   ".webp": "image/webp",
   ".gif": "image/gif",
+  ".pdf": "application/pdf",
 };
 
 export async function GET(_request: Request, context: { params: Promise<{ file: string }> }) {
