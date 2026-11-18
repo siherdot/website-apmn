@@ -138,7 +138,7 @@ export const pages: Halaman[] = [
     ringkas: "Dewan Komisaris menjalankan fungsi pengawasan atas pengelolaan perseroan.",
     bagian: [
       { h: "Susunan Dewan Komisaris", p: [
-        "Situs sebelumnya menampilkan satu Komisaris Utama dan satu Komisaris. Nama lengkap dan riwayat jabatan belum tersedia dalam bentuk teks yang dapat diverifikasi, sehingga tidak ditampilkan di sini sampai data resmi perseroan diterima.",
+        "Susunan Dewan Komisaris akan disampaikan melalui kanal keterbukaan informasi resmi perseroan. Informasi yang dipublikasikan mengikuti ketentuan peraturan perundang-undangan yang berlaku.",
       ]},
       { h: "Tugas", li: ["Mengawasi kebijakan dan pelaksanaan pengelolaan oleh Direksi.", "Memberikan nasihat kepada Direksi dalam menjalankan perseroan.", "Memastikan penerapan tata kelola dan pengendalian internal."] },
     ],
@@ -148,7 +148,7 @@ export const pages: Halaman[] = [
     ringkas: "Dewan Direksi bertanggung jawab atas pengelolaan perseroan sehari-hari.",
     bagian: [
       { h: "Susunan Dewan Direksi", p: [
-        "Situs sebelumnya menampilkan lima portrait anggota Direksi. Nama lengkap, jabatan, dan riwayat jabatan belum tersedia dalam bentuk teks yang dapat diverifikasi, sehingga tidak ditampilkan di sini sampai data resmi perseroan diterima.",
+        "Susunan Dewan Direksi akan disampaikan melalui kanal keterbukaan informasi resmi perseroan. Informasi yang dipublikasikan mengikuti ketentuan peraturan perundang-undangan yang berlaku.",
       ]},
       { h: "Tugas", li: ["Menjalankan kegiatan usaha sesuai anggaran dasar dan keputusan RUPS.", "Menyusun rencana kerja dan anggaran perseroan.", "Melaporkan kinerja kepada Dewan Komisaris dan pemegang saham."] },
     ],
@@ -206,7 +206,7 @@ export const pages: Halaman[] = [
     ringkas: "Informasi laporan keuangan perseroan akan disajikan sesuai periode pelaporan.",
     bagian: [
       { h: "Arsip", p: [
-        "Situs sebelumnya menyediakan halaman arsip Laporan Tahun 2024, 2025, 2026, dan 2027. Dokumen final akan dimuat setelah periode pelaporan dan proses audit selesai serta tautan resminya tersedia.",
+        "Dokumen laporan keuangan akan dimuat pada halaman ini setelah periode pelaporan dan proses audit selesai. Informasi material lainnya disampaikan melalui halaman Keterbukaan Informasi.",
       ] },
     ],
   },
@@ -263,7 +263,7 @@ export const pages: Halaman[] = [
     ringkas: "Kumpulan video profil dan dokumentasi kegiatan APMN serta RSU Putri Bidadari.",
     bagian: [
       { h: "Video Profil", p: [
-        "Situs sebelumnya menyediakan materi berjudul \"Video Ade Putri Medical Nusantara\". Tautan resmi dan izin penggunaan belum tersedia, jadi video belum ditanam di halaman ini.",
+        "Materi video profil akan ditampilkan setelah tautan resmi dan izin penggunaannya tersedia.",
       ] },
     ],
   },
