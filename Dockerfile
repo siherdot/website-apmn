@@ -11,6 +11,7 @@ RUN npm run build
 FROM node:26-alpine AS runner
 WORKDIR /app
 ENV NODE_ENV=production NEXT_TELEMETRY_DISABLED=1 PORT=3000 HOSTNAME=0.0.0.0
+RUN mkdir -p /app/data /app/data/uploads
 
 COPY --from=builder /app/public ./public
 COPY --from=builder /app/.next/standalone ./

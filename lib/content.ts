@@ -52,6 +52,7 @@ export const navGroups: { label: string; items: { slug: string; judul: string }[
   ]},
   { label: "Lainnya", items: [
     { slug: "prestasi", judul: "Prestasi" },
+    { slug: "galeri", judul: "Galeri Foto" },
     { slug: "video", judul: "Video" },
     { slug: "kontak", judul: "Kontak" },
   ]},

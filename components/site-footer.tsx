@@ -14,6 +14,7 @@ export default function SiteFooter() {
           <p>
             <a href={`mailto:${site.email}`}>{site.email}</a>
           </p>
+          <p><Link href="/galeri">Galeri Foto</Link></p>
         </div>
         <div>
           <h4>Informasi Investor</h4>

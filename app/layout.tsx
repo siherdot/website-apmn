@@ -1,21 +1,18 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import SiteHeader from "@/components/site-header";
-import SiteFooter from "@/components/site-footer";
-import { site } from "@/lib/content";
 
 export const metadata: Metadata = {
-  metadataBase: new URL(site.url),
-  title: { default: `${site.short} — ${site.name}`, template: `%s | ${site.short}` },
-  description: site.tagline,
+  metadataBase: new URL("https://adeputrimedicalnusantara.co.id"),
+  title: { default: "APMN — PT Ade Putri Medical Nusantara", template: "%s | APMN" },
+  description: "Berkomitmen menghadirkan layanan kesehatan yang mudah, cepat, dan setara.",
   alternates: { canonical: "/" },
   openGraph: {
     type: "website",
     locale: "id_ID",
     url: "/",
-    siteName: site.name,
-    title: `${site.short} — ${site.name}`,
-    description: site.tagline,
+    siteName: "PT Ade Putri Medical Nusantara",
+    title: "APMN — PT Ade Putri Medical Nusantara",
+    description: "Berkomitmen menghadirkan layanan kesehatan yang mudah, cepat, dan setara.",
     images: ["/images/og-apmn.png"],
   },
   robots: { index: true, follow: true },
@@ -32,11 +29,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
           rel="stylesheet"
         />
       </head>
-      <body>
-        <SiteHeader />
-        <main>{children}</main>
-        <SiteFooter />
-      </body>
+      <body>{children}</body>
     </html>
   );
 }
