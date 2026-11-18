@@ -137,7 +137,9 @@ export const pages: Halaman[] = [
     slug: "dewan-komisaris", judul: "Dewan Komisaris", kelompok: "Tata Kelola",
     ringkas: "Dewan Komisaris menjalankan fungsi pengawasan atas pengelolaan perseroan.",
     bagian: [
-      { h: "Susunan Dewan Komisaris", p: ["Susunan nama dan riwayat jabatan Dewan Komisaris akan dimuat setelah data resmi perseroan terverifikasi."] },
+      { h: "Susunan Dewan Komisaris", p: [
+        "Situs sebelumnya menampilkan satu Komisaris Utama dan satu Komisaris. Nama lengkap dan riwayat jabatan belum tersedia dalam bentuk teks yang dapat diverifikasi, sehingga tidak ditampilkan di sini sampai data resmi perseroan diterima.",
+      ]},
       { h: "Tugas", li: ["Mengawasi kebijakan dan pelaksanaan pengelolaan oleh Direksi.", "Memberikan nasihat kepada Direksi dalam menjalankan perseroan.", "Memastikan penerapan tata kelola dan pengendalian internal."] },
     ],
   },
@@ -145,7 +147,9 @@ export const pages: Halaman[] = [
     slug: "dewan-direksi", judul: "Dewan Direksi", kelompok: "Tata Kelola",
     ringkas: "Dewan Direksi bertanggung jawab atas pengelolaan perseroan sehari-hari.",
     bagian: [
-      { h: "Susunan Dewan Direksi", p: ["Susunan nama dan riwayat jabatan Dewan Direksi akan dimuat setelah data resmi perseroan terverifikasi."] },
+      { h: "Susunan Dewan Direksi", p: [
+        "Situs sebelumnya menampilkan lima portrait anggota Direksi. Nama lengkap, jabatan, dan riwayat jabatan belum tersedia dalam bentuk teks yang dapat diverifikasi, sehingga tidak ditampilkan di sini sampai data resmi perseroan diterima.",
+      ]},
       { h: "Tugas", li: ["Menjalankan kegiatan usaha sesuai anggaran dasar dan keputusan RUPS.", "Menyusun rencana kerja dan anggaran perseroan.", "Melaporkan kinerja kepada Dewan Komisaris dan pemegang saham."] },
     ],
   },
@@ -201,7 +205,9 @@ export const pages: Halaman[] = [
     slug: "laporan-keuangan", judul: "Laporan Keuangan", kelompok: "Kinerja",
     ringkas: "Informasi laporan keuangan perseroan akan disajikan sesuai periode pelaporan.",
     bagian: [
-      { h: "Laporan Keuangan", p: ["Dokumen laporan keuangan akan dimuat pada halaman ini setelah periode pelaporan dan proses audit selesai."] },
+      { h: "Arsip", p: [
+        "Situs sebelumnya menyediakan halaman arsip Laporan Tahun 2024, 2025, 2026, dan 2027. Dokumen final akan dimuat setelah periode pelaporan dan proses audit selesai serta tautan resminya tersedia.",
+      ] },
     ],
   },
   {
@@ -233,7 +239,13 @@ export const pages: Halaman[] = [
     bagian: [
       { h: "RUPS Tahunan", p: ["RUPS Tahunan diselenggarakan paling lambat enam bulan setelah tahun buku berakhir untuk menyetujui laporan tahunan dan laporan keuangan serta menetapkan penggunaan laba."] },
       { h: "RUPS Luar Biasa", p: ["RUPS Luar Biasa diselenggarakan apabila diperlukan untuk keputusan di luar kewenangan RUPS Tahunan, sesuai anggaran dasar dan peraturan perundang-undangan."] },
-      { h: "Jadwal", p: ["Jadwal dan materi rapat akan diumumkan pada halaman ini setelah penetapan resmi."] },
+      { h: "Dokumen 2023", li: [
+        "02 Des 2023 — Ringkasan Risalah RUPST & RUPSLB APMN 2023.",
+        "10 Des 2023 — Pemanggilan RUPST dan RUPSLB 2023.",
+        "15 Des 2023 — Surat Kuasa RUPS 2023.",
+        "20 Des 2023 — Tata Tertib RUPS 2023.",
+        "31 Des 2023 — Pengumuman RUPST dan RUPSLB 2023.",
+      ] },
     ],
   },
   {
@@ -250,7 +262,9 @@ export const pages: Halaman[] = [
     slug: "video", judul: "Video", kelompok: "Lainnya",
     ringkas: "Kumpulan video profil dan dokumentasi kegiatan APMN serta RSU Putri Bidadari.",
     bagian: [
-      { h: "Video", p: ["Materi video akan ditambahkan setelah tautan resmi dan izin penggunaan tersedia."] },
+      { h: "Video Profil", p: [
+        "Situs sebelumnya menyediakan materi berjudul \"Video Ade Putri Medical Nusantara\". Tautan resmi dan izin penggunaan belum tersedia, jadi video belum ditanam di halaman ini.",
+      ] },
     ],
   },
   {
