@@ -896,3 +896,86 @@
     }
   }
 }
+
+/* Admin dashboard layout. Astryx supplies the controls; these classes lay them out. */
+@layer components {
+  .adm-shell {
+    display: grid;
+    gap: var(--spacing-4);
+  }
+
+  .adm-top {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: var(--spacing-3);
+  }
+
+  .adm-actions {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: var(--spacing-2);
+  }
+
+  .adm-actions > * {
+    flex: 0 0 auto;
+  }
+
+  .adm-actions .astryx-tab-list {
+    width: auto;
+    max-width: 100%;
+  }
+
+  .adm-stats {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: var(--spacing-3);
+  }
+
+  .adm-stats > div {
+    display: grid;
+    gap: var(--spacing-2);
+    padding: var(--spacing-3);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-container);
+    background: var(--color-background-surface);
+  }
+
+  .adm-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.6fr);
+    gap: var(--spacing-4);
+    align-items: start;
+  }
+
+  @media (max-width: 900px) {
+    .adm-grid,
+    .adm-stats {
+      grid-template-columns: 1fr;
+    }
+  }
+}
+
+/* Astryx scopes its theme tokens with @scope; some engines do not apply that
+   block to the theme root. Pin APMN's brand palette in the last cascade layer. */
+@layer utilities {
+  :root,
+  [data-astryx-theme="apmn"] {
+    --color-accent: #0a6b12;
+    --color-accent-muted: #b8e2b5;
+    --color-text-accent: #0a6b12;
+    --color-icon-accent: #0a6b12;
+    --color-on-accent: #ffffff;
+    --color-background-body: #f6f9f6;
+    --color-background-muted: #eef4ed;
+    --color-background-card: #ffffff;
+    --color-background-surface: #ffffff;
+    --color-border: #d9e5da;
+    --color-border-emphasized: #0a6b12;
+    --color-text-primary: #102015;
+    --color-text-secondary: #5c6b60;
+    --color-neutral: #0000000f;
+  }
+}
