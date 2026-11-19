@@ -20,7 +20,7 @@ export default async function LoginPage() {
             <Text type="label" weight="bold">
               APMN
             </Text>
-            <Text type="supporting">Content management</Text>
+            <Text type="supporting">Manajemen Konten</Text>
           </span>
         </Link>
         <Text type="supporting" weight="semibold" color="accent" className="adm-kicker">

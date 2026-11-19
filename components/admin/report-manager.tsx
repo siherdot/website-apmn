@@ -158,7 +158,7 @@ export default function ReportManager({ initialReports }: { initialReports: Repo
       <header className="adm-top">
         <div>
           <Text type="supporting" weight="semibold" color="accent" className="adm-kicker">
-            APMN / Content management
+            APMN / Manajemen Konten
           </Text>
           <Heading level={1}>Manajer Laporan</Heading>
           <Text as="p" color="secondary" className="adm-sub">

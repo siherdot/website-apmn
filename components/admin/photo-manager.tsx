@@ -141,7 +141,7 @@ export default function PhotoManager({ initialPhotos }: { initialPhotos: Photo[]
       <header className="adm-top">
         <div>
           <Text type="supporting" weight="semibold" color="accent" className="adm-kicker">
-            APMN / Content management
+            APMN / Manajemen Konten
           </Text>
           <Heading level={1}>Manajer Foto</Heading>
           <Text as="p" color="secondary" className="adm-sub">

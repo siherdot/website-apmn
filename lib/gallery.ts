@@ -7,21 +7,40 @@ export type { Photo } from "./gallery-types";
 export { GALLERY_CATEGORIES } from "./gallery-types";
 
 const SEED_PHOTOS: Photo[] = [
-  { id: "arsip-01", title: "Ruang farmasi", category: "Fasilitas", caption: "Dokumentasi fasilitas dari situs perseroan sebelumnya.", src: "/gallery/arsip-farmasi.webp", source: "arsip", published: true, order: 1, createdAt: "" },
-  { id: "arsip-02", title: "Peralatan diagnostik", category: "Fasilitas", caption: "Dokumentasi fasilitas dari situs perseroan sebelumnya.", src: "/gallery/arsip-diagnostik.webp", source: "arsip", published: true, order: 2, createdAt: "" },
-  { id: "arsip-03", title: "Layanan bank darah", category: "Fasilitas", caption: "Dokumentasi fasilitas dari situs perseroan sebelumnya.", src: "/gallery/arsip-bank-darah.webp", source: "arsip", published: true, order: 3, createdAt: "" },
-  { id: "arsip-04", title: "Area layanan darah", category: "Fasilitas", caption: "Dokumentasi fasilitas dari situs perseroan sebelumnya.", src: "/gallery/arsip-layanan-darah.webp", source: "arsip", published: true, order: 4, createdAt: "" },
-  { id: "arsip-05", title: "Tim fasilitas", category: "Fasilitas", caption: "Dokumentasi fasilitas dari situs perseroan sebelumnya.", src: "/gallery/arsip-staf.webp", source: "arsip", published: true, order: 5, createdAt: "" },
-  { id: "arsip-06", title: "Area resepsionis", category: "Fasilitas", caption: "Dokumentasi fasilitas dari situs perseroan sebelumnya.", src: "/gallery/arsip-resepsionis.webp", source: "arsip", published: true, order: 6, createdAt: "" },
-  { id: "arsip-07", title: "Pintu masuk fasilitas", category: "Fasilitas", caption: "Dokumentasi fasilitas dari situs perseroan sebelumnya.", src: "/gallery/arsip-pintu-masuk.webp", source: "arsip", published: true, order: 7, createdAt: "" },
-  { id: "arsip-08", title: "Area lobby", category: "Fasilitas", caption: "Dokumentasi fasilitas dari situs perseroan sebelumnya.", src: "/gallery/arsip-lobby.webp", source: "arsip", published: true, order: 8, createdAt: "" },
-  { id: "arsip-09", title: "Ruang tunggu", category: "Fasilitas", caption: "Dokumentasi fasilitas dari situs perseroan sebelumnya.", src: "/gallery/arsip-ruang-tunggu.webp", source: "arsip", published: true, order: 9, createdAt: "" },
-  { id: "arsip-10", title: "Fasad gedung", category: "Gedung", caption: "Dokumentasi gedung dari situs perseroan sebelumnya.", src: "/gallery/arsip-fasad.webp", source: "arsip", published: true, order: 10, createdAt: "" },
-  { id: "arsip-11", title: "Tampilan gedung", category: "Gedung", caption: "Dokumentasi gedung dari situs perseroan sebelumnya.", src: "/gallery/arsip-tampak-gedung.webp", source: "arsip", published: true, order: 11, createdAt: "" },
-  { id: "arsip-12", title: "Rumah sakit modular", category: "Gedung", caption: "Dokumentasi gedung dari situs perseroan sebelumnya.", src: "/gallery/arsip-rumah-sakit-modular.webp", source: "arsip", published: true, order: 12, createdAt: "" },
-  { id: "arsip-13", title: "Prestasi rekrutmen", category: "Prestasi", caption: "Dokumentasi prestasi dari situs perseroan sebelumnya.", src: "/gallery/arsip-prestasi-rekrutmen.webp", source: "arsip", published: true, order: 13, createdAt: "" },
-  { id: "arsip-14", title: "Prestasi sistem rumah sakit", category: "Prestasi", caption: "Dokumentasi prestasi dari situs perseroan sebelumnya.", src: "/gallery/arsip-prestasi-sistem.webp", source: "arsip", published: true, order: 14, createdAt: "" },
+  { id: "arsip-01", title: "Ruang farmasi", category: "Fasilitas", caption: "Area farmasi yang menjadi bagian dari layanan kefarmasian perseroan.", src: "/gallery/arsip-farmasi.webp", source: "arsip", published: true, order: 1, createdAt: "" },
+  { id: "arsip-02", title: "Peralatan diagnostik", category: "Fasilitas", caption: "Perlengkapan diagnostik yang digunakan dalam mendukung layanan pemeriksaan.", src: "/gallery/arsip-diagnostik.webp", source: "arsip", published: true, order: 2, createdAt: "" },
+  { id: "arsip-03", title: "Layanan bank darah", category: "Fasilitas", caption: "Fasilitas bank darah yang mendukung layanan transfusi dan ketersediaan darah.", src: "/gallery/arsip-bank-darah.webp", source: "arsip", published: true, order: 3, createdAt: "" },
+  { id: "arsip-04", title: "Area layanan darah", category: "Fasilitas", caption: "Area pendukung layanan darah di lingkungan fasilitas.", src: "/gallery/arsip-layanan-darah.webp", source: "arsip", published: true, order: 4, createdAt: "" },
+  { id: "arsip-05", title: "Potret tim", category: "Fasilitas", caption: "Dokumentasi tim dari arsip situs perseroan sebelumnya.", src: "/gallery/arsip-staf.webp", source: "arsip", published: true, order: 5, createdAt: "" },
+  { id: "arsip-06", title: "Area resepsionis", category: "Fasilitas", caption: "Area resepsionis sebagai titik penyambutan dan informasi pengunjung.", src: "/gallery/arsip-resepsionis.webp", source: "arsip", published: true, order: 6, createdAt: "" },
+  { id: "arsip-07", title: "Pintu masuk fasilitas", category: "Fasilitas", caption: "Pintu masuk gedung yang terekam dalam arsip dokumentasi perseroan.", src: "/gallery/arsip-pintu-masuk.webp", source: "arsip", published: true, order: 7, createdAt: "" },
+  { id: "arsip-08", title: "Area lobby", category: "Fasilitas", caption: "Area lobby yang digunakan untuk penyambutan dan ruang tunggu singkat.", src: "/gallery/arsip-lobby.webp", source: "arsip", published: true, order: 8, createdAt: "" },
+  { id: "arsip-09", title: "Ruang tunggu", category: "Fasilitas", caption: "Ruang tunggu yang menjadi bagian dari area layanan publik.", src: "/gallery/arsip-ruang-tunggu.webp", source: "arsip", published: true, order: 9, createdAt: "" },
+  { id: "arsip-10", title: "Fasad gedung", category: "Gedung", caption: "Tampak depan gedung dari arsip dokumentasi perseroan.", src: "/gallery/arsip-fasad.webp", source: "arsip", published: true, order: 10, createdAt: "" },
+  { id: "arsip-11", title: "Tampilan gedung", category: "Gedung", caption: "Tampilan bangunan keseluruhan dari arsip dokumentasi perseroan.", src: "/gallery/arsip-tampak-gedung.webp", source: "arsip", published: true, order: 11, createdAt: "" },
+  { id: "arsip-12", title: "Rumah sakit modular", category: "Gedung", caption: "Dokumentasi bangunan rumah sakit modular dalam arsip perseroan.", src: "/gallery/arsip-rumah-sakit-modular.webp", source: "arsip", published: true, order: 12, createdAt: "" },
+  { id: "arsip-13", title: "Prestasi rekrutmen", category: "Prestasi", caption: "Dokumentasi terkait rekrutmen dari arsip situs perseroan sebelumnya.", src: "/gallery/arsip-prestasi-rekrutmen.webp", source: "arsip", published: true, order: 13, createdAt: "" },
+  { id: "arsip-14", title: "Prestasi sistem rumah sakit", category: "Prestasi", caption: "Dokumentasi sistem informasi rumah sakit dari arsip situs perseroan sebelumnya.", src: "/gallery/arsip-prestasi-sistem.webp", source: "arsip", published: true, order: 14, createdAt: "" },
 ];
+
+const SEED_POLISH: Record<string, { title: string; caption: string }> = Object.fromEntries(
+  SEED_PHOTOS.map((photo) => [photo.id, { title: photo.title, caption: photo.caption }]),
+);
+const OLD_GENERIC_CAPTIONS = new Set([
+  "Dokumentasi fasilitas dari situs perseroan sebelumnya.",
+  "Dokumentasi gedung dari situs perseroan sebelumnya.",
+  "Dokumentasi prestasi dari situs perseroan sebelumnya.",
+]);
+
+function polishSeedCaptions(photos: Photo[]): Photo[] {
+  return photos.map((photo) => {
+    const polish = SEED_POLISH[photo.id];
+    return polish && OLD_GENERIC_CAPTIONS.has(photo.caption)
+      ? { ...photo, title: polish.title, caption: polish.caption }
+      : photo;
+  });
+}
+
 
 const dataDir = () => process.env.DATA_DIR || path.join(process.cwd(), "data");
 const dataFile = () => path.join(dataDir(), "photos.json");
@@ -46,7 +65,11 @@ async function readUnsafe(): Promise<Photo[]> {
     const raw = await fs.readFile(dataFile(), "utf8");
     const parsed = JSON.parse(raw);
     if (!Array.isArray(parsed)) throw new Error("Format photos.json tidak valid");
-    return (parsed as Photo[]).sort((a, b) => a.order - b.order);
+    const polished = polishSeedCaptions(parsed as Photo[]);
+    if (polished.some((photo, index) => photo !== (parsed as Photo[])[index])) {
+      await writeUnsafe(polished);
+    }
+    return polished.sort((a, b) => a.order - b.order);
   } catch (error) {
     if ((error as NodeJS.ErrnoException).code !== "ENOENT") throw error;
     await writeUnsafe(SEED_PHOTOS);

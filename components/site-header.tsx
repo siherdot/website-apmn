@@ -49,7 +49,7 @@ export default function SiteHeader() {
 
           <Button
             href="/prospektus"
-            label="Investor Relations"
+            label="Hubungan Investor"
             variant="primary"
             size="sm"
           />

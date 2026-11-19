@@ -188,7 +188,7 @@ export default async function Home() {
               <Text type="supporting" weight="semibold" color="accent" className="eyebrow">
                 Dokumen
               </Text>
-              <Heading level={2}>Investor Relations</Heading>
+              <Heading level={2}>Hubungan Investor</Heading>
             </div>
             <Text as="p" color="secondary">
               Prospektus, laporan tahunan, tata kelola, dan keterbukaan informasi dalam
