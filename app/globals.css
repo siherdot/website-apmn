@@ -998,3 +998,17 @@
     --color-neutral: #0000000f;
   }
 }
+
+/* StyleX rules are injected unlayered and late; pin these small overrides too. */
+.brand-lockup > span,
+.quick-list a > span {
+  column-gap: 8px !important;
+}
+
+.quick-list a > span > span:first-child {
+  margin-inline-end: 8px !important;
+}
+
+.nav-menu summary::after {
+  content: "▾" !important;
+}
