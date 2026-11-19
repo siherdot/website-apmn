@@ -1,10 +1,11 @@
-import Link from "next/link";
+import { Tab } from "@astryxdesign/core/TabList";
+import { TabList } from "@astryxdesign/core/TabList";
 
 export default function AdminTabs({ active }: { active: "foto" | "laporan" }) {
   return (
-    <nav className="adm-tabs" aria-label="Navigasi admin">
-      <Link href="/admin" className={active === "foto" ? "active" : undefined}>Foto</Link>
-      <Link href="/admin/laporan" className={active === "laporan" ? "active" : undefined}>Laporan</Link>
-    </nav>
+    <TabList value={active} onChange={() => {}} size="sm" aria-label="Navigasi admin">
+      <Tab value="foto" label="Foto" href="/admin" />
+      <Tab value="laporan" label="Laporan" href="/admin/laporan" />
+    </TabList>
   );
 }

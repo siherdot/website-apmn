@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
-import Link from "next/link";
+import { Heading } from "@astryxdesign/core/Heading";
+import { Link } from "@astryxdesign/core/Link";
+import { Text } from "@astryxdesign/core/Text";
 import { redirect } from "next/navigation";
 import { isAdmin } from "@/lib/admin-auth";
 import LoginForm from "@/components/admin/login-form";
@@ -10,17 +12,28 @@ export const metadata: Metadata = { title: "Masuk Admin", robots: { index: false
 export default async function LoginPage() {
   if (await isAdmin()) redirect("/admin");
   return (
-    <div className="adm-login">
-      <div className="adm-login-panel">
-        <Link href="/" className="adm-login-brand">
+    <div className="admin-login-shell">
+      <div className="admin-login-panel">
+        <Link href="/" className="brand-lockup" isStandalone>
           <img src="/images/logo-apmn.png" alt="" width={40} height={40} />
-          <span>APMN <small>Content management</small></span>
+          <span>
+            <Text type="label" weight="bold">
+              APMN
+            </Text>
+            <Text type="supporting">Content management</Text>
+          </span>
         </Link>
-        <p className="adm-kicker">Area terbatas</p>
-        <h1>Masuk dashboard</h1>
-        <p className="adm-sub">Kelola foto galeri publik perseroan.</p>
+        <Text type="supporting" weight="semibold" color="accent" className="adm-kicker">
+          Area terbatas
+        </Text>
+        <Heading level={1}>Masuk dashboard</Heading>
+        <Text as="p" color="secondary">
+          Kelola foto galeri dan dokumen investor perseroan.
+        </Text>
         <LoginForm />
-        <Link className="adm-login-back" href="/">← Kembali ke situs</Link>
+        <Link className="back-link" href="/" isStandalone>
+          ← Kembali ke situs
+        </Link>
       </div>
     </div>
   );

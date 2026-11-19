@@ -1,7 +1,18 @@
 "use client";
 
-import Link from "next/link";
-import { useMemo, useRef, useState } from "react";
+import { useMemo, useState } from "react";
+import { Badge } from "@astryxdesign/core/Badge";
+import { Banner } from "@astryxdesign/core/Banner";
+import { Button } from "@astryxdesign/core/Button";
+import { CheckboxInput } from "@astryxdesign/core/CheckboxInput";
+import { FileInput } from "@astryxdesign/core/FileInput";
+import { Heading } from "@astryxdesign/core/Heading";
+import { Link } from "@astryxdesign/core/Link";
+import { NumberInput } from "@astryxdesign/core/NumberInput";
+import { Selector } from "@astryxdesign/core/Selector";
+import { Text } from "@astryxdesign/core/Text";
+import { TextArea } from "@astryxdesign/core/TextArea";
+import { TextInput } from "@astryxdesign/core/TextInput";
 import type { Photo } from "@/lib/gallery-types";
 import { GALLERY_CATEGORIES } from "@/lib/gallery-types";
 import AdminTabs from "./admin-tabs";
@@ -22,7 +33,6 @@ export default function PhotoManager({ initialPhotos }: { initialPhotos: Photo[]
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState("");
   const [notice, setNotice] = useState("");
-  const fileRef = useRef<HTMLInputElement>(null);
 
   const stats = useMemo(() => ({
     total: items.length,
@@ -56,7 +66,6 @@ export default function PhotoManager({ initialPhotos }: { initialPhotos: Photo[]
       if (!response.ok) throw new Error(result.error || "Gagal mengunggah foto.");
       setItems((prev) => [result.photo as Photo, ...prev]);
       setTitle(""); setCaption(""); setFile(null); setPublished(true);
-      if (fileRef.current) fileRef.current.value = "";
       setNotice("Foto berhasil ditambahkan.");
     } catch (e) {
       setError(e instanceof Error ? e.message : "Gagal mengunggah foto.");
@@ -124,96 +133,121 @@ export default function PhotoManager({ initialPhotos }: { initialPhotos: Photo[]
     window.location.href = "/admin/login";
   }
 
+  const categoryOptions = [...GALLERY_CATEGORIES];
+  const filterOptions = ["Semua", ...GALLERY_CATEGORIES];
+
   return (
     <div className="adm-shell">
       <header className="adm-top">
         <div>
-          <p className="adm-kicker">APMN / Content management</p>
-          <h1>Manajer Foto</h1>
-          <p className="adm-sub">Unggah foto baru, atur judul dan kategori, lalu tentukan mana yang tampil di galeri publik.</p>
+          <Text type="supporting" weight="semibold" color="accent" className="adm-kicker">
+            APMN / Content management
+          </Text>
+          <Heading level={1}>Manajer Foto</Heading>
+          <Text as="p" color="secondary" className="adm-sub">
+            Unggah foto baru, atur judul dan kategori, lalu tentukan mana yang tampil di
+            galeri publik.
+          </Text>
         </div>
         <div className="adm-actions">
           <AdminTabs active="foto" />
-          <Link className="adm-link" href="/galeri" target="_blank">Lihat galeri ↗</Link>
-          <Link className="adm-link" href="/">Situs utama ↗</Link>
-          <button className="adm-quiet" type="button" onClick={logout}>Keluar</button>
+          <Link className="adm-link" href="/galeri" target="_blank" isStandalone isExternalLink>
+            Lihat galeri
+          </Link>
+          <Link className="adm-link" href="/" target="_blank" isStandalone isExternalLink>
+            Situs utama
+          </Link>
+          <Button label="Keluar" variant="secondary" onClick={logout} />
         </div>
       </header>
 
       <div className="adm-stats" aria-label="Ringkasan galeri">
-        <div><span>Total foto</span><strong>{stats.total}</strong></div>
-        <div><span>Tampil di publik</span><strong>{stats.published}</strong></div>
-        <div><span>Arsip situs lama</span><strong>{stats.arsip}</strong></div>
-        <div><span>Kategori</span><strong>{stats.kategori}</strong></div>
+        <div><Text type="supporting" color="secondary">Total foto</Text><Heading level={3}>{stats.total}</Heading></div>
+        <div><Text type="supporting" color="secondary">Tampil di publik</Text><Heading level={3}>{stats.published}</Heading></div>
+        <div><Text type="supporting" color="secondary">Arsip situs lama</Text><Heading level={3}>{stats.arsip}</Heading></div>
+        <div><Text type="supporting" color="secondary">Kategori</Text><Heading level={3}>{stats.kategori}</Heading></div>
       </div>
 
-      {(error || notice) && (
-        <div className={error ? "adm-msg adm-msg-error" : "adm-msg adm-msg-ok"} role="status">
-          {error || notice}
-        </div>
-      )}
+      {error && <Banner status="error" title={error} container="card" />}
+      {!error && notice && <Banner status="success" title={notice} container="card" />}
 
       <div className="adm-grid">
         <section className="adm-card adm-upload">
           <div className="adm-card-head">
-            <h2>Tambah foto</h2>
-            <p>JPG, PNG, WebP, atau GIF · maksimal 12 MB</p>
+            <Heading level={2}>Tambah foto</Heading>
+            <Text type="supporting" color="secondary">
+              JPG, PNG, WebP, atau GIF · maksimal 12 MB
+            </Text>
           </div>
-          <form onSubmit={upload}>
-            <label className="adm-field">
-              <span>Berkas foto</span>
-              <input
-                ref={fileRef}
-                type="file"
-                accept="image/jpeg,image/png,image/webp,image/gif"
-                onChange={(e) => {
-                  const next = e.target.files?.[0] || null;
-                  setFile(next);
-                  if (next && !title) setTitle(next.name.replace(/\.[^.]+$/, "").replace(/[-_]+/g, " "));
-                }}
-                required
-              />
-            </label>
-            <label className="adm-field">
-              <span>Judul</span>
-              <input value={title} onChange={(e) => setTitle(e.target.value)} placeholder="Contoh: Ruang perawatan" required />
-            </label>
-            <label className="adm-field">
-              <span>Kategori</span>
-              <select value={category} onChange={(e) => setCategory(e.target.value)}>
-                {GALLERY_CATEGORIES.map((c) => <option key={c} value={c}>{c}</option>)}
-              </select>
-            </label>
-            <label className="adm-field">
-              <span>Caption <em>(opsional)</em></span>
-              <textarea value={caption} onChange={(e) => setCaption(e.target.value)} rows={3} placeholder="Keterangan singkat" />
-            </label>
-            <label className="adm-check">
-              <input type="checkbox" checked={published} onChange={(e) => setPublished(e.target.checked)} />
-              <span>Tampilkan di galeri publik</span>
-            </label>
-            <button className="adm-primary" type="submit" disabled={busy}>Unggah foto</button>
+          <form className="admin-form-stack" onSubmit={upload}>
+            <FileInput
+              label="Berkas foto"
+              value={file}
+              onChange={(files) => setFile(Array.isArray(files) ? files[0] ?? null : files)}
+              accept="image/jpeg,image/png,image/webp,image/gif"
+              maxSize={12 * 1024 * 1024}
+              isRequired
+            />
+            <TextInput
+              label="Judul"
+              value={title}
+              onChange={(value) => setTitle(value)}
+              placeholder="Contoh: Ruang perawatan"
+              isRequired
+            />
+            <Selector
+              label="Kategori"
+              options={categoryOptions}
+              value={category}
+              onChange={(value) => setCategory(value)}
+            />
+            <TextArea
+              label="Caption"
+              value={caption}
+              onChange={(value) => setCaption(value)}
+              isOptional
+              placeholder="Keterangan singkat"
+              rows={3}
+            />
+            <CheckboxInput
+              label="Tampilkan di galeri publik"
+              value={published}
+              onChange={(checked) => setPublished(checked)}
+            />
+            <Button
+              label="Unggah foto"
+              type="submit"
+              variant="primary"
+              isLoading={busy}
+              isDisabled={busy}
+            />
           </form>
         </section>
 
         <section className="adm-card adm-list">
           <div className="adm-card-head adm-list-head">
             <div>
-              <h2>Daftar foto</h2>
-              <p>{visible.length} dari {items.length} foto</p>
+              <Heading level={2}>Daftar foto</Heading>
+              <Text type="supporting" color="secondary">
+                {visible.length} dari {items.length} foto
+              </Text>
             </div>
             <div className="adm-filters">
-              <input
+              <TextInput
+                label="Cari foto"
                 type="search"
                 value={query}
-                onChange={(e) => setQuery(e.target.value)}
+                onChange={(value) => setQuery(value)}
                 placeholder="Cari judul…"
-                aria-label="Cari foto"
+                isLabelHidden
               />
-              <select value={filter} onChange={(e) => setFilter(e.target.value)} aria-label="Filter kategori">
-                <option>Semua</option>
-                {GALLERY_CATEGORIES.map((c) => <option key={c} value={c}>{c}</option>)}
-              </select>
+              <Selector
+                label="Filter kategori"
+                options={filterOptions}
+                value={filter}
+                onChange={(value) => setFilter(value)}
+                isLabelHidden
+              />
             </div>
           </div>
 
@@ -227,45 +261,59 @@ export default function PhotoManager({ initialPhotos }: { initialPhotos: Photo[]
                   {isEditing ? (
                     <div className="adm-edit">
                       <div className="adm-edit-grid">
-                        <label><span>Judul</span><input value={draft.title} onChange={(e) => changeDraft(photo.id, { title: e.target.value })} /></label>
-                        <label><span>Kategori</span>
-                          <select value={draft.category} onChange={(e) => changeDraft(photo.id, { category: e.target.value })}>
-                            {GALLERY_CATEGORIES.map((c) => <option key={c} value={c}>{c}</option>)}
-                            {!GALLERY_CATEGORIES.includes(draft.category as typeof GALLERY_CATEGORIES[number]) &&
-                              <option value={draft.category}>{draft.category}</option>}
-                          </select>
-                        </label>
-                        <label><span>Urutan</span><input type="number" value={draft.order} onChange={(e) => changeDraft(photo.id, { order: Number(e.target.value) })} /></label>
-                        <label className="adm-edit-caption"><span>Caption</span><input value={draft.caption} onChange={(e) => changeDraft(photo.id, { caption: e.target.value })} /></label>
+                        <TextInput
+                          label="Judul"
+                          value={draft.title}
+                          onChange={(value) => changeDraft(photo.id, { title: value })}
+                        />
+                        <Selector
+                          label="Kategori"
+                          options={Array.from(new Set([...categoryOptions, draft.category]))}
+                          value={draft.category}
+                          onChange={(value) => changeDraft(photo.id, { category: value })}
+                        />
+                        <NumberInput
+                          label="Urutan"
+                          value={draft.order}
+                          onChange={(value) => changeDraft(photo.id, { order: value })}
+                        />
+                        <div className="adm-edit-caption">
+                          <TextInput
+                            label="Caption"
+                            value={draft.caption}
+                            onChange={(value) => changeDraft(photo.id, { caption: value })}
+                          />
+                        </div>
                       </div>
-                      <label className="adm-check">
-                        <input type="checkbox" checked={draft.published} onChange={(e) => changeDraft(photo.id, { published: e.target.checked })} />
-                        <span>Tampil di publik</span>
-                      </label>
+                      <CheckboxInput
+                        label="Tampil di publik"
+                        value={draft.published}
+                        onChange={(checked) => changeDraft(photo.id, { published: checked })}
+                      />
                       <div className="adm-row-actions">
-                        <button className="adm-primary small" type="button" onClick={() => save(photo.id)} disabled={busy}>Simpan</button>
-                        <button className="adm-quiet" type="button" onClick={() => setEditing(null)}>Batal</button>
+                        <Button label="Simpan" size="sm" variant="primary" isLoading={busy} onClick={() => save(photo.id)} />
+                        <Button label="Batal" size="sm" variant="secondary" onClick={() => setEditing(null)} />
                       </div>
                     </div>
                   ) : (
                     <div className="adm-photo-body">
                       <div className="adm-photo-title">
-                        <strong>{photo.title}</strong>
-                        <span className="adm-tag">{photo.category}</span>
-                        {photo.source === "arsip" && <span className="adm-tag muted">Arsip lama</span>}
-                        {!photo.published && <span className="adm-tag off">Tersembunyi</span>}
+                        <Text type="label" weight="semibold">{photo.title}</Text>
+                        <Badge label={photo.category} variant="green" />
+                        {photo.source === "arsip" && <Badge label="Arsip lama" variant="neutral" />}
+                        {!photo.published && <Badge label="Tersembunyi" variant="orange" />}
                       </div>
-                      {photo.caption && <p>{photo.caption}</p>}
+                      {photo.caption && <Text type="supporting" color="secondary">{photo.caption}</Text>}
                       <div className="adm-row-actions">
-                        <button className="adm-quiet" type="button" onClick={() => startEdit(photo)}>Edit</button>
-                        <button className="adm-danger" type="button" onClick={() => remove(photo)} disabled={busy}>Hapus</button>
+                        <Button label="Edit" size="sm" variant="secondary" onClick={() => startEdit(photo)} />
+                        <Button label="Hapus" size="sm" variant="destructive" isLoading={busy} onClick={() => remove(photo)} />
                       </div>
                     </div>
                   )}
                 </article>
               );
             })}
-            {visible.length === 0 && <p className="adm-empty">Tidak ada foto yang cocok.</p>}
+            {visible.length === 0 && <Text as="p" color="secondary" className="adm-empty">Tidak ada foto yang cocok.</Text>}
           </div>
         </section>
       </div>

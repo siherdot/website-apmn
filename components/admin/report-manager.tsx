@@ -1,7 +1,18 @@
 "use client";
 
-import Link from "next/link";
-import { useMemo, useRef, useState } from "react";
+import { useMemo, useState } from "react";
+import { Badge } from "@astryxdesign/core/Badge";
+import { Banner } from "@astryxdesign/core/Banner";
+import { Button } from "@astryxdesign/core/Button";
+import { CheckboxInput } from "@astryxdesign/core/CheckboxInput";
+import { FileInput } from "@astryxdesign/core/FileInput";
+import { Heading } from "@astryxdesign/core/Heading";
+import { Link } from "@astryxdesign/core/Link";
+import { NumberInput } from "@astryxdesign/core/NumberInput";
+import { Selector } from "@astryxdesign/core/Selector";
+import { Text } from "@astryxdesign/core/Text";
+import { TextArea } from "@astryxdesign/core/TextArea";
+import { TextInput } from "@astryxdesign/core/TextInput";
 import type { Report } from "@/lib/report-types";
 import { REPORT_CATEGORIES } from "@/lib/report-types";
 import AdminTabs from "./admin-tabs";
@@ -38,7 +49,6 @@ export default function ReportManager({ initialReports }: { initialReports: Repo
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState("");
   const [notice, setNotice] = useState("");
-  const fileRef = useRef<HTMLInputElement>(null);
 
   const stats = useMemo(() => ({
     total: items.length,
@@ -73,7 +83,6 @@ export default function ReportManager({ initialReports }: { initialReports: Repo
       if (!response.ok) throw new Error(result.error || "Gagal menambahkan laporan.");
       setItems((prev) => [result.report as Report, ...prev]);
       setTitle(""); setSlug(""); setDescription(""); setUrl(""); setFile(null); setPublished(true);
-      if (fileRef.current) fileRef.current.value = "";
       setNotice("Laporan berhasil ditambahkan.");
     } catch (e) {
       setError(e instanceof Error ? e.message : "Gagal menambahkan laporan.");
@@ -142,96 +151,131 @@ export default function ReportManager({ initialReports }: { initialReports: Repo
     window.location.href = "/admin/login";
   }
 
+  const filterOptions = ["Semua", ...REPORT_CATEGORIES];
+
   return (
     <div className="adm-shell">
       <header className="adm-top">
         <div>
-          <p className="adm-kicker">APMN / Content management</p>
-          <h1>Manajer Laporan</h1>
-          <p className="adm-sub">Tambahkan laporan atau dokumen investor. Berkas PDF akan tersimpan permanen; tautan eksternal juga didukung.</p>
+          <Text type="supporting" weight="semibold" color="accent" className="adm-kicker">
+            APMN / Content management
+          </Text>
+          <Heading level={1}>Manajer Laporan</Heading>
+          <Text as="p" color="secondary" className="adm-sub">
+            Tambahkan laporan atau dokumen investor. Berkas PDF akan tersimpan permanen;
+            tautan eksternal juga didukung.
+          </Text>
         </div>
         <div className="adm-actions">
           <AdminTabs active="laporan" />
-          <Link className="adm-link" href="/" target="_blank">Situs utama ↗</Link>
-          <button className="adm-quiet" type="button" onClick={logout}>Keluar</button>
+          <Link className="adm-link" href="/" target="_blank" isStandalone isExternalLink>
+            Situs utama
+          </Link>
+          <Button label="Keluar" variant="secondary" onClick={logout} />
         </div>
       </header>
 
       <div className="adm-stats" aria-label="Ringkasan laporan">
-        <div><span>Total laporan</span><strong>{stats.total}</strong></div>
-        <div><span>Tampil di publik</span><strong>{stats.published}</strong></div>
-        <div><span>Berkas PDF</span><strong>{stats.pdf}</strong></div>
-        <div><span>Kategori</span><strong>{stats.kategori}</strong></div>
+        <div><Text type="supporting" color="secondary">Total laporan</Text><Heading level={3}>{stats.total}</Heading></div>
+        <div><Text type="supporting" color="secondary">Tampil di publik</Text><Heading level={3}>{stats.published}</Heading></div>
+        <div><Text type="supporting" color="secondary">Berkas PDF</Text><Heading level={3}>{stats.pdf}</Heading></div>
+        <div><Text type="supporting" color="secondary">Kategori</Text><Heading level={3}>{stats.kategori}</Heading></div>
       </div>
 
-      {(error || notice) && (
-        <div className={error ? "adm-msg adm-msg-error" : "adm-msg adm-msg-ok"} role="status">
-          {error || notice}
-        </div>
-      )}
+      {error && <Banner status="error" title={error} container="card" />}
+      {!error && notice && <Banner status="success" title={notice} container="card" />}
 
       <div className="adm-grid">
         <section className="adm-card adm-upload">
           <div className="adm-card-head">
-            <h2>Tambah laporan</h2>
-            <p>PDF maksimal 25 MB, atau tautan http(s)/halaman internal</p>
+            <Heading level={2}>Tambah laporan</Heading>
+            <Text type="supporting" color="secondary">
+              PDF maksimal 25 MB, atau tautan http(s)/halaman internal
+            </Text>
           </div>
-          <form onSubmit={submit}>
-            <label className="adm-field">
-              <span>Berkas PDF <em>(opsional)</em></span>
-              <input
-                ref={fileRef}
-                type="file"
-                accept="application/pdf,.pdf"
-                onChange={(e) => {
-                  const next = e.target.files?.[0] || null;
-                  setFile(next);
-                  if (next && !title) setTitle(next.name.replace(/\.[^.]+$/, "").replace(/[-_]+/g, " "));
-                }}
-              />
-            </label>
-            <label className="adm-field">
-              <span>URL <em>(bila tanpa berkas)</em></span>
-              <input value={url} onChange={(e) => setUrl(e.target.value)} placeholder="https://… atau /halaman" />
-            </label>
-            <label className="adm-field">
-              <span>Judul</span>
-              <input value={title} onChange={(e) => setTitle(e.target.value)} placeholder="Contoh: Laporan Tahunan 2025" required />
-            </label>
-            <label className="adm-field">
-              <span>Kategori</span>
-              <select value={category} onChange={(e) => setCategory(e.target.value)}>
-                {REPORT_CATEGORIES.map((c) => <option key={c} value={c}>{c}</option>)}
-              </select>
-            </label>
-            <label className="adm-field">
-              <span>Slug halaman <em>(opsional)</em></span>
-              <input value={slug} onChange={(e) => setSlug(e.target.value)} placeholder="contoh: laporan-tahunan" />
-            </label>
-            <label className="adm-field">
-              <span>Keterangan <em>(opsional)</em></span>
-              <textarea value={description} onChange={(e) => setDescription(e.target.value)} rows={3} placeholder="Ringkasan dokumen" />
-            </label>
-            <label className="adm-check">
-              <input type="checkbox" checked={published} onChange={(e) => setPublished(e.target.checked)} />
-              <span>Tampilkan di situs publik</span>
-            </label>
-            <button className="adm-primary" type="submit" disabled={busy}>Simpan laporan</button>
+          <form className="admin-form-stack" onSubmit={submit}>
+            <FileInput
+              label="Berkas PDF"
+              value={file}
+              onChange={(files) => setFile(Array.isArray(files) ? files[0] ?? null : files)}
+              accept="application/pdf,.pdf"
+              maxSize={25 * 1024 * 1024}
+              isOptional
+            />
+            <TextInput
+              label="URL"
+              value={url}
+              onChange={(value) => setUrl(value)}
+              placeholder="https://… atau /halaman"
+              isOptional
+            />
+            <TextInput
+              label="Judul"
+              value={title}
+              onChange={(value) => setTitle(value)}
+              placeholder="Contoh: Laporan Tahunan 2025"
+              isRequired
+            />
+            <Selector
+              label="Kategori"
+              options={[...REPORT_CATEGORIES]}
+              value={category}
+              onChange={(value) => setCategory(value)}
+            />
+            <TextInput
+              label="Slug halaman"
+              value={slug}
+              onChange={(value) => setSlug(value)}
+              placeholder="contoh: laporan-tahunan"
+              isOptional
+            />
+            <TextArea
+              label="Keterangan"
+              value={description}
+              onChange={(value) => setDescription(value)}
+              isOptional
+              placeholder="Ringkasan dokumen"
+              rows={3}
+            />
+            <CheckboxInput
+              label="Tampilkan di situs publik"
+              value={published}
+              onChange={(checked) => setPublished(checked)}
+            />
+            <Button
+              label="Simpan laporan"
+              type="submit"
+              variant="primary"
+              isLoading={busy}
+              isDisabled={busy}
+            />
           </form>
         </section>
 
         <section className="adm-card adm-list">
           <div className="adm-card-head adm-list-head">
             <div>
-              <h2>Daftar laporan</h2>
-              <p>{visible.length} dari {items.length} laporan</p>
+              <Heading level={2}>Daftar laporan</Heading>
+              <Text type="supporting" color="secondary">
+                {visible.length} dari {items.length} laporan
+              </Text>
             </div>
             <div className="adm-filters">
-              <input type="search" value={query} onChange={(e) => setQuery(e.target.value)} placeholder="Cari judul…" aria-label="Cari laporan" />
-              <select value={filter} onChange={(e) => setFilter(e.target.value)} aria-label="Filter kategori">
-                <option>Semua</option>
-                {REPORT_CATEGORIES.map((c) => <option key={c} value={c}>{c}</option>)}
-              </select>
+              <TextInput
+                label="Cari laporan"
+                type="search"
+                value={query}
+                onChange={(value) => setQuery(value)}
+                placeholder="Cari judul…"
+                isLabelHidden
+              />
+              <Selector
+                label="Filter kategori"
+                options={filterOptions}
+                value={filter}
+                onChange={(value) => setFilter(value)}
+                isLabelHidden
+              />
             </div>
           </div>
 
@@ -244,48 +288,85 @@ export default function ReportManager({ initialReports }: { initialReports: Repo
                   {isEditing ? (
                     <div className="adm-edit">
                       <div className="adm-edit-grid">
-                        <label><span>Judul</span><input value={draft.title} onChange={(e) => changeDraft(report.id, { title: e.target.value })} /></label>
-                        <label><span>Kategori</span>
-                          <select value={draft.category} onChange={(e) => changeDraft(report.id, { category: e.target.value })}>
-                            {REPORT_CATEGORIES.map((c) => <option key={c} value={c}>{c}</option>)}
-                            {!REPORT_CATEGORIES.includes(draft.category as typeof REPORT_CATEGORIES[number]) && <option value={draft.category}>{draft.category}</option>}
-                          </select>
-                        </label>
-                        <label><span>Urutan</span><input type="number" value={draft.order} onChange={(e) => changeDraft(report.id, { order: Number(e.target.value) })} /></label>
-                        <label><span>Slug</span><input value={draft.slug} onChange={(e) => changeDraft(report.id, { slug: e.target.value })} /></label>
-                        <label className="adm-edit-caption"><span>URL</span><input value={draft.url} onChange={(e) => changeDraft(report.id, { url: e.target.value })} /></label>
-                        <label className="adm-edit-caption"><span>Keterangan</span><input value={draft.description} onChange={(e) => changeDraft(report.id, { description: e.target.value })} /></label>
+                        <TextInput
+                          label="Judul"
+                          value={draft.title}
+                          onChange={(value) => changeDraft(report.id, { title: value })}
+                        />
+                        <Selector
+                          label="Kategori"
+                          options={Array.from(new Set([...REPORT_CATEGORIES, draft.category]))}
+                          value={draft.category}
+                          onChange={(value) => changeDraft(report.id, { category: value })}
+                        />
+                        <NumberInput
+                          label="Urutan"
+                          value={draft.order}
+                          onChange={(value) => changeDraft(report.id, { order: value })}
+                        />
+                        <TextInput
+                          label="Slug"
+                          value={draft.slug}
+                          onChange={(value) => changeDraft(report.id, { slug: value })}
+                        />
+                        <div className="adm-edit-caption">
+                          <TextInput
+                            label="URL"
+                            value={draft.url}
+                            onChange={(value) => changeDraft(report.id, { url: value })}
+                          />
+                        </div>
+                        <div className="adm-edit-caption">
+                          <TextInput
+                            label="Keterangan"
+                            value={draft.description}
+                            onChange={(value) => changeDraft(report.id, { description: value })}
+                          />
+                        </div>
                       </div>
-                      <label className="adm-check">
-                        <input type="checkbox" checked={draft.published} onChange={(e) => changeDraft(report.id, { published: e.target.checked })} />
-                        <span>Tampil di publik</span>
-                      </label>
+                      <CheckboxInput
+                        label="Tampil di publik"
+                        value={draft.published}
+                        onChange={(checked) => changeDraft(report.id, { published: checked })}
+                      />
                       <div className="adm-row-actions">
-                        <button className="adm-primary small" type="button" onClick={() => save(report.id)} disabled={busy}>Simpan</button>
-                        <button className="adm-quiet" type="button" onClick={() => setEditing(null)}>Batal</button>
+                        <Button label="Simpan" size="sm" variant="primary" isLoading={busy} onClick={() => save(report.id)} />
+                        <Button label="Batal" size="sm" variant="secondary" onClick={() => setEditing(null)} />
                       </div>
                     </div>
                   ) : (
                     <div className="adm-report-body">
                       <div className="adm-photo-title">
-                        <strong>{report.title}</strong>
-                        <span className="adm-tag">{report.category}</span>
-                        <span className="adm-tag muted">{sourceLabel[report.source]}</span>
-                        {!report.published && <span className="adm-tag off">Tersembunyi</span>}
+                        <Text type="label" weight="semibold">{report.title}</Text>
+                        <Badge label={report.category} variant="green" />
+                        <Badge label={sourceLabel[report.source]} variant="neutral" />
+                        {!report.published && <Badge label="Tersembunyi" variant="orange" />}
                       </div>
-                      {report.description && <p>{report.description}</p>}
-                      <p className="adm-report-url">{report.url}</p>
+                      {report.description && (
+                        <Text type="supporting" color="secondary">{report.description}</Text>
+                      )}
+                      <Text type="supporting" color="accent" className="adm-report-url">
+                        {report.url}
+                      </Text>
                       <div className="adm-row-actions">
-                        <a className="adm-link" href={report.url} target={report.url.startsWith("/") ? undefined : "_blank"} rel="noreferrer">Buka</a>
-                        <button className="adm-quiet" type="button" onClick={() => startEdit(report)}>Edit</button>
-                        <button className="adm-danger" type="button" onClick={() => remove(report)}>Hapus</button>
+                        <Link
+                          className="adm-link"
+                          href={report.url}
+                          target={report.url.startsWith("/") ? undefined : "_blank"}
+                          isStandalone
+                          isExternalLink={!report.url.startsWith("/")}
+                        >
+                          Buka
+                        </Link>
+                        <Button label="Edit" size="sm" variant="secondary" onClick={() => startEdit(report)} />
+                        <Button label="Hapus" size="sm" variant="destructive" isLoading={busy} onClick={() => remove(report)} />
                       </div>
                     </div>
                   )}
                 </article>
               );
             })}
-            {visible.length === 0 && <p className="adm-empty">Tidak ada laporan yang cocok.</p>}
+            {visible.length === 0 && <Text as="p" color="secondary" className="adm-empty">Tidak ada laporan yang cocok.</Text>}
           </div>
         </section>
       </div>

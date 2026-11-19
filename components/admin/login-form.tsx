@@ -1,6 +1,9 @@
 "use client";
 
 import { useState } from "react";
+import { Banner } from "@astryxdesign/core/Banner";
+import { Button } from "@astryxdesign/core/Button";
+import { TextInput } from "@astryxdesign/core/TextInput";
 
 export default function LoginForm() {
   const [password, setPassword] = useState("");
@@ -27,13 +30,23 @@ export default function LoginForm() {
   }
 
   return (
-    <form className="adm-login-form" onSubmit={submit}>
-      <label className="adm-field">
-        <span>Kata sandi admin</span>
-        <input type="password" autoComplete="current-password" value={password} onChange={(e) => setPassword(e.target.value)} required autoFocus />
-      </label>
-      {error && <p className="adm-msg adm-msg-error" role="alert">{error}</p>}
-      <button className="adm-primary" type="submit" disabled={busy}>{busy ? "Memeriksa…" : "Masuk dashboard"}</button>
+    <form className="admin-form-stack" onSubmit={submit}>
+      <TextInput
+        label="Kata sandi admin"
+        type="password"
+        value={password}
+        onChange={(value) => setPassword(value)}
+        isRequired
+        hasAutoFocus
+      />
+      {error && <Banner status="error" title={error} container="card" />}
+      <Button
+        label="Masuk dashboard"
+        type="submit"
+        variant="primary"
+        isLoading={busy}
+        isDisabled={busy}
+      />
     </form>
   );
 }

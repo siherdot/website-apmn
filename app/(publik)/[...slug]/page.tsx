@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
-import Link from "next/link";
+import { Heading } from "@astryxdesign/core/Heading";
+import { Link } from "@astryxdesign/core/Link";
+import { Text } from "@astryxdesign/core/Text";
 import { notFound } from "next/navigation";
 import { navGroups, pages } from "@/lib/content";
 import { listPublishedReports } from "@/lib/reports";
@@ -31,67 +33,109 @@ export default async function Halaman({ params }: Props) {
   return (
     <div className="wrap">
       <nav className="crumb" aria-label="Lokasi halaman">
-        <Link href="/">Beranda</Link> / {page.kelompok} / <span className="active">{page.judul}</span>
+        <Link href="/" isStandalone>
+          Beranda
+        </Link>{" "}
+        / {page.kelompok} /{" "}
+        <Text as="span" weight="bold" color="accent">
+          {page.judul}
+        </Text>
       </nav>
+
       <div className="doc-layout">
         <aside className="doc-nav" aria-label="Navigasi halaman">
-          {navGroups.map((g) => (
-            <div key={g.label}>
-              <h2>{g.label}</h2>
-              {g.items.map((i) => (
-                <Link
-                  key={i.slug}
-                  href={`/${i.slug}`}
-                  className={i.slug === page.slug ? "active" : undefined}
-                  aria-current={i.slug === page.slug ? "page" : undefined}
-                >
-                  {i.judul}
-                </Link>
-              ))}
+          {navGroups.map((group) => (
+            <div className="doc-nav-group" key={group.label}>
+              <Text type="supporting" weight="semibold" color="secondary">
+                {group.label}
+              </Text>
+              <div className="doc-nav-links">
+                {group.items.map((item) => (
+                  <Link
+                    key={item.slug}
+                    href={`/${item.slug}`}
+                    isStandalone
+                    data-current={item.slug === page.slug ? "true" : undefined}
+                    aria-current={item.slug === page.slug ? "page" : undefined}
+                  >
+                    {item.judul}
+                  </Link>
+                ))}
+              </div>
             </div>
           ))}
         </aside>
+
         <article className="article">
-          <h1>{page.judul}</h1>
-          <p className="ringkas">{page.ringkas}</p>
+          <Heading level={1}>{page.judul}</Heading>
+          <Text as="p" type="large" color="secondary" className="ringkas">
+            {page.ringkas}
+          </Text>
+
           {report && report.url !== `/${page.slug}` && (
-            <div className="doc-callout managed">
+            <div className="callout managed">
               {report.url.startsWith("/") ? (
-                <Link href={report.url}>Dokumen resmi: {report.title} →</Link>
+                <Link href={report.url} isStandalone>
+                  Dokumen resmi: {report.title} →
+                </Link>
               ) : (
-                <a href={report.url} target="_blank" rel="noreferrer">Dokumen resmi: {report.title} →</a>
+                <Link
+                  href={report.url}
+                  isStandalone
+                  isExternalLink
+                  target="_blank"
+                >
+                  Dokumen resmi: {report.title}
+                </Link>
               )}
-              <small>
-                {report.description || "Dokumen dikelola melalui dashboard admin."} Tautan diperbarui oleh admin perseroan.
-              </small>
+              <Text as="span" type="supporting" color="secondary">
+                {report.description || "Dokumen dikelola melalui dashboard admin."} Tautan
+                diperbarui oleh admin perseroan.
+              </Text>
             </div>
           )}
-          {page.bagian.map((b) => (
-            <section key={b.h}>
-              <h2>{b.h}</h2>
-              {b.p?.map((t, i) => <p key={i}>{t}</p>)}
-              {b.li && (
+
+          {page.bagian.map((section) => (
+            <section key={section.h}>
+              <Heading level={2}>{section.h}</Heading>
+              {section.p?.map((paragraph, index) => (
+                <Text as="p" key={index}>
+                  {paragraph}
+                </Text>
+              ))}
+              {section.li && (
                 <ul>
-                  {b.li.map((t, i) => <li key={i}>{t}</li>)}
+                  {section.li.map((item, index) => (
+                    <li key={index}>
+                      <Text>{item}</Text>
+                    </li>
+                  ))}
                 </ul>
               )}
-              {b.taut?.filter((t) => !(report && !t.url.startsWith("/"))).map((t) =>
-                t.url.startsWith("/") ? (
-                  <p key={t.url}>
-                    <Link href={t.url}>{t.teks} →</Link>
-                  </p>
-                ) : (
-                  <div className="doc-callout" key={t.url}>
-                    <a href={t.url} target="_blank" rel="noreferrer">
-                      {t.teks} →
-                    </a>
-                    <small>Tautan resmi eksternal. Dokumen dibuka di tab baru.</small>
-                  </div>
-                ),
-              )}
+              {section.taut
+                ?.filter((link) => !(report && !link.url.startsWith("/")))
+                .map((link) =>
+                  link.url.startsWith("/") ? (
+                    <Text as="p" key={link.url}>
+                      <Link href={link.url} isStandalone>
+                        {link.teks} →
+                      </Link>
+                    </Text>
+                  ) : (
+                    <div className="callout" key={link.url}>
+                      <Link href={link.url} isStandalone isExternalLink target="_blank">
+                        {link.teks}
+                      </Link>
+                      <Text as="span" type="supporting" color="secondary">
+                        Tautan resmi eksternal. Dokumen dibuka di tab baru.
+                      </Text>
+                    </div>
+                  ),
+                )}
             </section>
           ))}
-          <Link className="back" href="/">
+
+          <Link className="back-link" href="/" isStandalone>
             ← Kembali ke beranda
           </Link>
         </article>

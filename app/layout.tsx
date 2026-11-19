@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
+import "./layers.css";
 import "./globals.css";
+import AstryxProvider from "@/components/astryx-provider";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://adeputrimedicalnusantara.co.id"),
@@ -25,11 +27,13 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link
-          href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,400;6..72,500;6..72,600&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap"
+          href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700&family=Newsreader:opsz,wght@6..72,400;6..72,500;6..72,600&display=swap"
           rel="stylesheet"
         />
       </head>
-      <body>{children}</body>
+      <body>
+        <AstryxProvider>{children}</AstryxProvider>
+      </body>
     </html>
   );
 }

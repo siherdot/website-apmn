@@ -1,0 +1,173 @@
+{
+  "schemaVersion": 1,
+  "recipe": "astryx-oklch-v1",
+  "generatorVersion": "palette-generator-v1",
+  "candidateFormatVersion": "palette-typescript-v1",
+  "candidateSha256": "fb10cb1a54e526f28dc0c0d3b6569fd9e0d215b01b2a872e0821eb8d989f5d01",
+  "request": {
+    "recipe": "astryx-oklch-v1",
+    "vibrancy": 50,
+    "neutralProfile": "neutral-v1",
+    "modeStrategy": "light-and-dark",
+    "stops": [
+      0,
+      5,
+      10,
+      15,
+      20,
+      25,
+      30,
+      35,
+      40,
+      45,
+      50,
+      55,
+      60,
+      65,
+      70,
+      75,
+      80,
+      85,
+      90,
+      95,
+      100
+    ],
+    "families": [
+      {
+        "id": "accent",
+        "name": "Accent",
+        "seed": "#0a6b12",
+        "kind": "chromatic",
+        "anchors": [
+          {
+            "mode": "light",
+            "stop": 35,
+            "color": "#0a6b12",
+            "policy": "exact"
+          }
+        ]
+      },
+      {
+        "id": "neutral",
+        "name": "Neutral",
+        "seed": "#5c6b60",
+        "kind": "neutral",
+        "anchors": [
+          {
+            "mode": "light",
+            "stop": 45,
+            "color": "#5c6b60",
+            "policy": "exact"
+          },
+          {
+            "mode": "dark",
+            "stop": 45,
+            "color": "#5c6b60",
+            "policy": "exact"
+          }
+        ]
+      }
+    ]
+  },
+  "diagnostics": {
+    "families": {
+      "accent": {
+        "light": {
+          "monotonic": true,
+          "minimumAdjacentDeltaE": 3.8145426257535435,
+          "maximumAdjacentDeltaE": 18.727975294038828,
+          "maximumHueDrift": 0.8768505978604253,
+          "hueIdentityRisk": null,
+          "gamutMappedStops": [
+            10,
+            15,
+            100
+          ],
+          "anchors": [
+            {
+              "mode": "light",
+              "stop": 35,
+              "color": "#0a6b12",
+              "policy": "exact",
+              "generatedColor": "#0a6b12",
+              "deltaE": 0
+            }
+          ]
+        },
+        "dark": {
+          "monotonic": true,
+          "minimumAdjacentDeltaE": 4.174706448319297,
+          "maximumAdjacentDeltaE": 18.72347200451589,
+          "maximumHueDrift": 0.8322460308573341,
+          "hueIdentityRisk": null,
+          "gamutMappedStops": [
+            100
+          ],
+          "anchors": []
+        }
+      },
+      "neutral": {
+        "light": {
+          "monotonic": true,
+          "minimumAdjacentDeltaE": 3.8731991535993453,
+          "maximumAdjacentDeltaE": 17.681461281171774,
+          "maximumHueDrift": 66.27641043818141,
+          "hueIdentityRisk": null,
+          "gamutMappedStops": [
+            100
+          ],
+          "anchors": [
+            {
+              "mode": "light",
+              "stop": 45,
+              "color": "#5c6b60",
+              "policy": "exact",
+              "generatedColor": "#5c6b60",
+              "deltaE": 0
+            }
+          ]
+        },
+        "dark": {
+          "monotonic": true,
+          "minimumAdjacentDeltaE": 3.7164335016199908,
+          "maximumAdjacentDeltaE": 17.681461281171774,
+          "maximumHueDrift": 67.56598601749124,
+          "hueIdentityRisk": null,
+          "gamutMappedStops": [
+            100
+          ],
+          "anchors": [
+            {
+              "mode": "dark",
+              "stop": 45,
+              "color": "#5c6b60",
+              "policy": "exact",
+              "generatedColor": "#5c6b60",
+              "deltaE": 0
+            }
+          ]
+        }
+      }
+    },
+    "coordination": [
+      {
+        "mode": "light",
+        "stop": 50,
+        "closestFamilies": null,
+        "minimumFamilyDeltaE": null,
+        "strongestFamily": "Accent",
+        "weakestFamily": "Accent",
+        "chromaRatio": 1
+      },
+      {
+        "mode": "dark",
+        "stop": 50,
+        "closestFamilies": null,
+        "minimumFamilyDeltaE": null,
+        "strongestFamily": "Accent",
+        "weakestFamily": "Accent",
+        "chromaRatio": 1
+      }
+    ]
+  }
+}

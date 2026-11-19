@@ -1,150 +1,240 @@
-import Link from "next/link";
+import { Badge } from "@astryxdesign/core/Badge";
+import { Button } from "@astryxdesign/core/Button";
+import { Heading } from "@astryxdesign/core/Heading";
+import { Link } from "@astryxdesign/core/Link";
+import { Text } from "@astryxdesign/core/Text";
 import { canonicLinks, site } from "@/lib/content";
 import { listPublishedReports } from "@/lib/reports";
 import type { Report } from "@/lib/report-types";
 
 export const dynamic = "force-dynamic";
 
+function reportHref(report: Report) {
+  return report.url || `/${report.slug || ""}`;
+}
+
 function DocRow({ report }: { report: Report }) {
-  const inner = (
+  const href = reportHref(report);
+  const external = href.startsWith("http") || href.startsWith("www.");
+  const content = (
     <>
-      <span className="meta">{report.category}</span>
-      <span className="title">{report.title}</span>
-      <span className="go">→</span>
+      <Badge label={report.category} variant="green" />
+      <Text type="label" weight="semibold" className="doc-row-title">
+        {report.title}
+      </Text>
+      <Text type="body" color="accent" aria-hidden="true">
+        →
+      </Text>
     </>
   );
-  return report.url.startsWith("/")
-    ? <Link className="docrow" href={report.url} key={report.id}>{inner}</Link>
-    : <a className="docrow" href={report.url} key={report.id} target="_blank" rel="noreferrer">{inner}</a>;
+
+  return external ? (
+    <Link className="doc-row" href={href} isStandalone isExternalLink target="_blank">
+      {content}
+    </Link>
+  ) : (
+    <Link className="doc-row" href={href} isStandalone>
+      {content}
+    </Link>
+  );
 }
 
 function MiniDoc({ report }: { report: Report }) {
-  return report.url.startsWith("/")
-    ? <li><Link href={report.url}><span>{report.title}</span> →</Link></li>
-    : <li><a href={report.url} target="_blank" rel="noreferrer"><span>{report.title}</span> →</a></li>;
+  const href = reportHref(report);
+  const external = href.startsWith("http") || href.startsWith("www.");
+  return (
+    <li>
+      {external ? (
+        <Link href={href} isStandalone isExternalLink target="_blank">
+          {report.title}
+        </Link>
+      ) : (
+        <Link href={href} isStandalone>
+          {report.title}
+        </Link>
+      )}
+    </li>
+  );
 }
 
 export default async function Home() {
   const reports = await listPublishedReports();
+
   return (
     <>
-      <section className="masthead">
-        <div className="wrap masthead-in">
+      <section className="hero">
+        <div className="wrap hero-grid">
           <div>
-            <p className="eyebrow">PT Ade Putri Medical Nusantara</p>
-            <h1>
+            <Text type="supporting" weight="semibold" color="accent" className="eyebrow">
+              PT Ade Putri Medical Nusantara
+            </Text>
+            <Heading level={1} className="hero-title">
               Layanan kesehatan yang mudah, cepat, dan <em>setara.</em>
-            </h1>
-            <p className="lead">
+            </Heading>
+            <Text as="p" type="large" color="secondary" className="hero-lead">
               Kami mengelola fasilitas pelayanan kesehatan dengan prinsip tata kelola yang
               baik, transparan, dan akuntabel — untuk pasien, mitra, dan pemangku kepentingan.
-            </p>
-            <div className="actions">
-              <Link className="btn" href="/prospektus">
-                Baca Prospektus <span className="arrow">→</span>
-              </Link>
-              <Link className="textlink" href="/tata-kelola">
+            </Text>
+            <div className="hero-actions">
+              <Button
+                href="/prospektus"
+                label="Baca Prospektus"
+                variant="primary"
+                size="md"
+              >
+                Baca Prospektus <span aria-hidden="true">→</span>
+              </Button>
+              <Link href="/tata-kelola" isStandalone>
                 Lihat Tata Kelola
               </Link>
             </div>
           </div>
-          <aside className="masthead-side" aria-label="Akses cepat">
-            <p className="side-label">Akses cepat</p>
-            <ol className="quick">
-              <li><Link href="/sekilas-apmn"><span>01</span> Profil Perseroan</Link></li>
-              <li><Link href="/tata-kelola"><span>02</span> Tata Kelola</Link></li>
-              <li><Link href="/keterbukaan-informasi"><span>03</span> Kinerja &amp; Informasi</Link></li>
+
+          <aside className="side-panel" aria-label="Akses cepat">
+            <Text type="supporting" weight="semibold" color="secondary" className="side-label">
+              Akses cepat
+            </Text>
+            <ol className="quick-list">
+              <li>
+                <Link href="/sekilas-apmn" isStandalone>
+                  <Text type="supporting" color="accent">
+                    01
+                  </Text>
+                  Profil Perseroan
+                </Link>
+              </li>
+              <li>
+                <Link href="/tata-kelola" isStandalone>
+                  <Text type="supporting" color="accent">
+                    02
+                  </Text>
+                  Tata Kelola
+                </Link>
+              </li>
+              <li>
+                <Link href="/keterbukaan-informasi" isStandalone>
+                  <Text type="supporting" color="accent">
+                    03
+                  </Text>
+                  Kinerja &amp; Informasi
+                </Link>
+              </li>
             </ol>
-            <div className="doc-panel">
-              <h3>Dokumen utama</h3>
-              <ul>
-                {reports.slice(0, 3).map((report) => <MiniDoc report={report} key={report.id} />)}
+            <div className="mini-doc-panel">
+              <Heading level={3}>Dokumen utama</Heading>
+              <ul className="mini-docs">
+                {reports.slice(0, 3).map((report) => (
+                  <MiniDoc report={report} key={report.id} />
+                ))}
               </ul>
             </div>
           </aside>
         </div>
       </section>
 
-      <section className="section">
+      <section className="page-section">
         <div className="wrap">
           <div className="section-head">
             <div>
-              <p className="eyebrow">Ringkasan</p>
-              <h2>Perseroan</h2>
+              <Text type="supporting" weight="semibold" color="accent" className="eyebrow">
+                Ringkasan
+              </Text>
+              <Heading level={2}>Perseroan</Heading>
             </div>
-            <p>
+            <Text as="p" color="secondary">
               Gambaran singkat fokus usaha, portofolio, dan prinsip yang mendasari
               pengelolaan perseroan.
-            </p>
+            </Text>
           </div>
-          <div className="facts">
-            <div className="fact">
-              <span className="n">01 / Fokus usaha</span>
-              <h3>Pengelolaan kesehatan</h3>
-              <p>
+          <div className="fact-grid">
+            <div className="fact-card">
+              <Text type="supporting" color="accent" weight="semibold">
+                01 / Fokus usaha
+              </Text>
+              <Heading level={3}>Pengelolaan kesehatan</Heading>
+              <Text as="p" color="secondary">
                 Mengelola rumah sakit serta mengembangkan layanan spesialis dan penunjang
                 medis.
-              </p>
+              </Text>
             </div>
-            <div className="fact">
-              <span className="n">02 / Portofolio</span>
-              <h3>RSU Putri Bidadari</h3>
-              <p>
+            <div className="fact-card">
+              <Text type="supporting" color="accent" weight="semibold">
+                02 / Portofolio
+              </Text>
+              <Heading level={3}>RSU Putri Bidadari</Heading>
+              <Text as="p" color="secondary">
                 Fasilitas utama perseroan di Kabupaten Langkat, Sumatera Utara, dengan
                 layanan rawat jalan, rawat inap, dan gawat darurat.
-              </p>
+              </Text>
             </div>
-            <div className="fact">
-              <span className="n">03 / Tata kelola</span>
-              <h3>Transparan &amp; akuntabel</h3>
-              <p>
+            <div className="fact-card">
+              <Text type="supporting" color="accent" weight="semibold">
+                03 / Tata kelola
+              </Text>
+              <Heading level={3}>Transparan &amp; akuntabel</Heading>
+              <Text as="p" color="secondary">
                 Pengawasan Dewan Komisaris, pengelolaan Direksi, serta komite pendukung
                 dalam pengambilan keputusan.
-              </p>
+              </Text>
             </div>
           </div>
         </div>
       </section>
 
-      <section className="section alt">
+      <section className="page-section muted">
         <div className="wrap">
           <div className="section-head">
             <div>
-              <p className="eyebrow">Dokumen</p>
-              <h2>Investor Relations</h2>
+              <Text type="supporting" weight="semibold" color="accent" className="eyebrow">
+                Dokumen
+              </Text>
+              <Heading level={2}>Investor Relations</Heading>
             </div>
-            <p>
+            <Text as="p" color="secondary">
               Prospektus, laporan tahunan, tata kelola, dan keterbukaan informasi dalam
               satu tempat.
-            </p>
+            </Text>
           </div>
-          <div className="doclist">
-            {reports.map((report) => <DocRow report={report} key={report.id} />)}
+          <div className="doc-list">
+            {reports.map((report) => (
+              <DocRow report={report} key={report.id} />
+            ))}
             {reports.length === 0 && (
-              <p className="ir-empty">Dokumen investor akan ditampilkan setelah tersedia.</p>
+              <Text as="p" color="secondary" className="ir-empty">
+                Dokumen investor akan ditampilkan setelah tersedia.
+              </Text>
             )}
           </div>
-          <p className="ir-contact">
+          <Text as="p" type="supporting" color="secondary" className="ir-contact">
             Pertanyaan investor:{" "}
-            <a href={`mailto:${site.email}`}>{site.email}</a>
-          </p>
+            <Link href={`mailto:${site.email}`} isStandalone>
+              {site.email}
+            </Link>
+          </Text>
         </div>
       </section>
 
-      <section className="network">
-        <div className="wrap network-in">
+      <section className="network-band">
+        <div className="wrap network-inner">
           <div>
-            <h2>Jaringan Rumah Sakit Grup</h2>
-            <p>
+            <Heading level={2}>Jaringan Rumah Sakit Grup</Heading>
+            <Text as="p" color="inherit">
               Informasi layanan, fasilitas, dan jadwal dokter tersedia melalui situs resmi
               masing-masing rumah sakit.
-            </p>
+            </Text>
           </div>
           <div className="network-links">
-            {canonicLinks.map((r) => (
-              <a className="cta" href={r.url} key={r.url} target="_blank" rel="noreferrer">
-                {r.nama} →
-              </a>
+            {canonicLinks.map((hospital) => (
+              <Button
+                key={hospital.url}
+                href={hospital.url}
+                target="_blank"
+                label={hospital.nama}
+                variant="secondary"
+                size="sm"
+              >
+                {hospital.nama} <span aria-hidden="true">→</span>
+              </Button>
             ))}
           </div>
         </div>
